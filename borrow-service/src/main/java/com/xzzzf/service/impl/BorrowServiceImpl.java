@@ -6,6 +6,8 @@ import com.xzzzf.entity.BorrowDetails;
 import com.xzzzf.entity.User;
 import com.xzzzf.mapper.BorrowMapper;
 import com.xzzzf.service.BorrowService;
+import com.xzzzf.service.client.BookClient;
+import com.xzzzf.service.client.UserClient;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -20,20 +22,20 @@ public class BorrowServiceImpl implements BorrowService {
     @Resource
     private BorrowMapper borrowMapper;
 
+    @Resource
+    private UserClient userClient;
 
-    private RestTemplate restTemplate = new RestTemplate();
+    @Resource
+    private BookClient bookClient;
 
-
-
-    // 通过restTemplate调用user-service和book-service
     @Override
     public BorrowDetails getUserBorrowDetails(Integer uid) {
         List<Borrow> borrows = borrowMapper.getBorrowsByUid(uid);
-        User user = restTemplate.getForObject("http://localhost:8301/user/" + uid, User.class);
+        User user = userClient.getUserById(uid);
 
         List<Book> bookList = borrows
                 .stream()
-                .map(borrow -> restTemplate.getForObject("http://localhost:8101/book/" + borrow.getBid(), Book.class))
+                .map(borrow -> bookClient.findBookById(borrow.getBid()))
                 .collect(Collectors.toList());
         return new BorrowDetails(user, bookList);
     }

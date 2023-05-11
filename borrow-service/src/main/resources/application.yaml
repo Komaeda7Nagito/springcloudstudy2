@@ -12,3 +12,9 @@ spring:
     nacos:
       discovery:
         server-addr: localhost:8848
+        # 非临时实例
+        ephemeral: false
+        cluster-name: Chengdu
+    loadbalancer:
+      nacos:
+        enabled: true
