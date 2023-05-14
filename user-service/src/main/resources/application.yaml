@@ -7,3 +7,5 @@ spring:
     nacos:
       discovery:
         server-addr: localhost:8848
+        # 配置命名空间
+        namespace: 619b52ba-72d0-44fe-a99e-23fe6a227514
