@@ -13,3 +13,6 @@ spring:
       discovery:
         server-addr: localhost:8848
         namespace: 619b52ba-72d0-44fe-a99e-23fe6a227514
+    sentinel:
+      transport:
+        dashboard: localhost:8858
