@@ -6,6 +6,7 @@ import com.xzzzf.entity.BorrowDetails;
 import com.xzzzf.service.BorrowService;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -41,6 +42,14 @@ public class BorrowController {
     // Fallback 函数，函数签名与原函数一致或加一个 Throwable 类型的参数.
     String except(Throwable e) {
         return "Oops, error occurred at " + e.getMessage();
+    }
+
+    @RequestMapping("/test2")
+    @SentinelResource("test2")
+    String findUserBorrow2(@RequestParam(value = "a",required = false) String a,
+                           @RequestParam(value = "b",required = false) String b,
+                           @RequestParam(value = "c",required = false) String c){
+        return "请求成功！a = " + a + ", b = " + b + ", c = " + c;
     }
 
 }
